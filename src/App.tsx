@@ -27,7 +27,7 @@ const Navbar = () => {
           <a className="text-slate-600 hover:text-brand-dark transition-colors font-headline font-medium tracking-tight" href="#">Portfolio</a>
           <a className="text-slate-600 hover:text-brand-dark transition-colors font-headline font-medium tracking-tight" href="#">Packages</a>
         </div>
-        <button className="bg-brand-primary text-brand-dark px-6 py-2.5 rounded-full font-headline font-bold hover:bg-brand-accent hover:text-white transition-all shadow-sm">
+        <button className="bg-brand-accent text-white px-6 py-2.5 rounded-full font-headline font-bold hover:bg-green-600 transition-all shadow-sm">
           Book Consultation
         </button>
       </div>
@@ -39,15 +39,6 @@ const Hero = () => {
   return (
     <section className="relative pt-44 pb-32 px-6 overflow-hidden bg-white">
       <div className="max-w-7xl mx-auto flex flex-col items-center text-center relative z-10">
-        <motion.div 
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6 }}
-          className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-brand-primary/10 border border-brand-primary/20 mb-8"
-        >
-          <span className="w-2 h-2 rounded-full bg-brand-accent animate-pulse"></span>
-          <span className="text-brand-accent font-label text-xs tracking-widest uppercase font-bold">Digital Excellence in the Philippines</span>
-        </motion.div>
         
         <motion.h1 
           initial={{ opacity: 0, scale: 0.95 }}
@@ -55,7 +46,7 @@ const Hero = () => {
           transition={{ duration: 0.8, delay: 0.2 }}
           className="text-5xl md:text-8xl font-headline font-bold text-slate-900 leading-[0.95] tracking-tighter mb-8 max-w-5xl"
         >
-          Empowering Philippine MSMEs Through <span className="text-brand-accent italic">Digital Architecture</span>
+          Empowering Philippine Businesses Through <span className="text-brand-accent italic">Digital Architecture</span>
         </motion.h1>
 
         <motion.p 
@@ -73,7 +64,7 @@ const Hero = () => {
           transition={{ duration: 0.6, delay: 0.6 }}
           className="flex flex-col sm:flex-row gap-6"
         >
-          <button className="bg-brand-primary text-brand-dark px-8 py-4 rounded-full font-headline font-bold text-lg hover:shadow-xl hover:shadow-brand-primary/20 transition-all flex items-center justify-center gap-2">
+          <button className="bg-brand-accent text-white px-8 py-4 rounded-full font-headline font-bold text-lg hover:shadow-xl hover:shadow-brand-accent/20 transition-all flex items-center justify-center gap-2">
             Book Your Free Consultation
             <ArrowRight size={20} />
           </button>
@@ -270,7 +261,7 @@ const Booking = () => {
             ></textarea>
           </div>
 
-          <button className="w-full bg-brand-primary text-brand-dark py-6 rounded-full font-headline font-black text-xl hover:shadow-2xl hover:shadow-brand-primary/40 transition-all transform hover:-translate-y-1 active:translate-y-0" type="submit">
+          <button className="w-full bg-brand-accent text-white py-6 rounded-full font-headline font-black text-xl hover:shadow-2xl hover:shadow-brand-primary/40 transition-all transform hover:-translate-y-1 active:translate-y-0" type="submit">
             Initiate Consultation
           </button>
         </form>
@@ -287,7 +278,7 @@ const Footer = () => {
           <div className="flex flex-col gap-4">
             <span className="text-brand-dark font-bold font-headline text-3xl tracking-tighter">HINARA</span>
             <p className="text-slate-400 font-body text-sm max-w-xs leading-relaxed">
-              © 2024 Hinara Solutions. Engineering digital architecture to empower the next generation of Philippine MSMEs.
+              © 2026 Hinara Solutions. Engineering digital architecture to empower the next generation of Philippine Businesses.
             </p>
           </div>
           
