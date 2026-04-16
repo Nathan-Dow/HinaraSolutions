@@ -1,0 +1,21 @@
+@import "tailwindcss";
+@import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300..700&family=Manrope:wght@200..800&family=Inter:wght@100..900&display=swap');
+
+@theme {
+  --font-headline: "Space Grotesk", sans-serif;
+  --font-body: "Manrope", sans-serif;
+  --font-label: "Inter", sans-serif;
+
+  --color-brand-primary: #a0ffc3;
+  --color-brand-accent: #22c55e;
+  --color-brand-dark: #0f172a;
+  --color-brand-muted: #64748b;
+  --color-brand-surface: #ffffff;
+  --color-brand-surface-low: #f8fafc;
+}
+
+@layer base {
+  body {
+    @apply bg-brand-surface text-brand-dark font-body antialiased;
+  }
+}
