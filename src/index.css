@@ -1,20 +1,50 @@
 @import "tailwindcss";
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap');
 
 @theme {
-  --font-headline: "Space Grotesk", sans-serif;
-  --font-body: "Manrope", sans-serif;
-  --font-label: "Inter", sans-serif;
+  --font-sans: "Inter", sans-serif;
 
-  --color-brand-primary: #a0ffc3;
-  --color-brand-accent: #22c55e;
-  --color-brand-dark: #0f172a;
-  --color-brand-muted: #64748b;
-  --color-brand-surface: #ffffff;
-  --color-brand-surface-low: #f8fafc;
+  /* Deep forest greens from your uploaded image */
+  --color-bg-base: #021207;
+  --color-bg-surface: #061e11;
+  --color-bg-elevated: #0a2e19;
+  
+  --color-brand-green: #2eea73; /* Vibrant neon green */
+  --color-brand-glow: #1db954; 
+  --color-text-main: #ffffff;
+  --color-text-muted: #9ca3af;
+  
+  --color-border-subtle: rgba(46, 234, 115, 0.15);
+}
+
+html {
+  /* Enables native smooth scrolling when clicking navigation links */
+  scroll-behavior: smooth;
 }
 
 @layer base {
   body {
-    @apply bg-brand-surface text-brand-dark font-body antialiased;
+    @apply bg-bg-base text-text-main font-sans antialiased selection:bg-brand-green selection:text-black overflow-x-hidden;
+  }
+}
+
+@layer utilities {
+  .text-gradient {
+    @apply bg-clip-text text-transparent bg-gradient-to-b from-white to-gray-400;
+  }
+
+  .green-gradient {
+    @apply bg-clip-text text-transparent bg-gradient-to-r from-brand-green to-brand-glow;
+  }
+
+  /* Professional background mesh */
+  .bg-mesh {
+    background-image: 
+      radial-gradient(circle at 15% 50%, rgba(46, 234, 115, 0.05), transparent 25%),
+      radial-gradient(circle at 85% 30%, rgba(29, 185, 84, 0.05), transparent 25%);
+  }
+
+  .glow-shadow {
+    box-shadow: 0 0 40px rgba(46, 234, 115, 0.1);
   }
 }
