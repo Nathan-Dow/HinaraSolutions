@@ -25,6 +25,9 @@ const longestHeroPhrase = heroPhrases.reduce(
   (longest, phrase) => (phrase.length > longest.length ? phrase : longest),
   heroPhrases[0]
 );
+const autoReplySubject = "Thanks for reaching out to Hinara Solutions";
+const autoReplyBody =
+  "Your request has been received and will be reviewed by our team. Replies typically take 1-3 business days depending on current availability. Please keep an eye on your email for our response.";
 
 const platformCards = [
   {
@@ -229,12 +232,44 @@ export default function App() {
     e.preventDefault();
     setFormStatus("loading");
     try {
+      const serviceId = import.meta.env.VITE_EMAILJS_SERVICE_ID;
+      const requestTemplateId = import.meta.env.VITE_EMAILJS_TEMPLATE_ID;
+      const autoReplyTemplateId = import.meta.env.VITE_EMAILJS_AUTOREPLY_TEMPLATE_ID;
+      const publicKey = import.meta.env.VITE_EMAILJS_PUBLIC_KEY;
+
       await emailjs.send(
-        import.meta.env.VITE_EMAILJS_SERVICE_ID,
-        import.meta.env.VITE_EMAILJS_TEMPLATE_ID,
-        { name: formData.name, email: formData.email, message: formData.message },
-        { publicKey: import.meta.env.VITE_EMAILJS_PUBLIC_KEY }
+        serviceId,
+        requestTemplateId,
+        {
+          name: formData.name,
+          email: formData.email,
+          message: formData.message,
+        },
+        { publicKey }
       );
+
+      if (autoReplyTemplateId) {
+        try {
+          await emailjs.send(
+            serviceId,
+            autoReplyTemplateId,
+            {
+              to_name: formData.name,
+              to_email: formData.email,
+              reply_to: formData.email,
+              subject: autoReplySubject,
+              acknowledgement_title: autoReplySubject,
+              acknowledgement_body: autoReplyBody,
+              submitted_message: formData.message,
+              turnaround_time: "1-3 business days",
+            },
+            { publicKey }
+          );
+        } catch (autoReplyError) {
+          console.error("Auto-reply email failed to send.", autoReplyError);
+        }
+      }
+
       setFormStatus("success");
       setFormData({ name: "", email: "", message: "" });
     } catch {
@@ -734,7 +769,10 @@ export default function App() {
                 </button>
 
                 {formStatus === "success" && (
-                  <p className="text-brand-green font-medium">Request sent - we'll be in touch soon.</p>
+                  <p className="text-brand-green font-medium">
+                    Request sent. We will review it and reply by email, usually within 1-3 business
+                    days.
+                  </p>
                 )}
                 {formStatus === "error" && (
                   <p className="text-red-400 font-medium">Something went wrong. Please try again.</p>
