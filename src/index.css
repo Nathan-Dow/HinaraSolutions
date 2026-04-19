@@ -1,50 +1,106 @@
+@import url("https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=Sora:wght@600;700;800&display=swap");
 @import "tailwindcss";
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap');
 
 @theme {
-  --font-sans: "Inter", sans-serif;
+  --font-sans: "Manrope", sans-serif;
 
-  /* Deep forest greens from your uploaded image */
-  --color-bg-base: #021207;
-  --color-bg-surface: #061e11;
-  --color-bg-elevated: #0a2e19;
-  
-  --color-brand-green: #2eea73; /* Vibrant neon green */
-  --color-brand-glow: #1db954; 
+  --color-bg-base: #020504;
+  --color-bg-surface: #07110c;
+  --color-bg-elevated: #0d1913;
+
+  --color-brand-green: #2eea73;
+  --color-brand-glow: #1db954;
   --color-text-main: #ffffff;
-  --color-text-muted: #9ca3af;
-  
-  --color-border-subtle: rgba(46, 234, 115, 0.15);
+  --color-text-muted: #94a39a;
+
+  --color-border-subtle: rgba(46, 234, 115, 0.16);
 }
 
 html {
-  /* Enables native smooth scrolling when clicking navigation links */
   scroll-behavior: smooth;
 }
 
 @layer base {
   body {
     @apply bg-bg-base text-text-main font-sans antialiased selection:bg-brand-green selection:text-black overflow-x-hidden;
+    background-image:
+      radial-gradient(circle at top, rgba(255, 255, 255, 0.04), transparent 24%),
+      linear-gradient(180deg, #020504 0%, #030805 40%, #020504 100%);
   }
 }
 
 @layer utilities {
+  .font-display {
+    font-family: "Sora", sans-serif;
+  }
+
   .text-gradient {
-    @apply bg-clip-text text-transparent bg-gradient-to-b from-white to-gray-400;
+    @apply bg-clip-text text-transparent bg-gradient-to-b from-white via-white to-white/55;
   }
 
   .green-gradient {
-    @apply bg-clip-text text-transparent bg-gradient-to-r from-brand-green to-brand-glow;
+    background-image: linear-gradient(90deg, #f5f7f5 0%, #9effbe 24%, #1db954 100%);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
   }
 
-  /* Professional background mesh */
   .bg-mesh {
-    background-image: 
-      radial-gradient(circle at 15% 50%, rgba(46, 234, 115, 0.05), transparent 25%),
-      radial-gradient(circle at 85% 30%, rgba(29, 185, 84, 0.05), transparent 25%);
+    background-image:
+      radial-gradient(circle at 15% 50%, rgba(46, 234, 115, 0.06), transparent 25%),
+      radial-gradient(circle at 85% 30%, rgba(29, 185, 84, 0.07), transparent 24%),
+      linear-gradient(180deg, rgba(255, 255, 255, 0.015), transparent 28%);
+  }
+
+  .hero-noise {
+    background-image:
+      linear-gradient(rgba(255, 255, 255, 0.03) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(255, 255, 255, 0.03) 1px, transparent 1px);
+    background-size: 88px 88px;
+    mask-image: linear-gradient(180deg, rgba(0, 0, 0, 0.65), transparent 88%);
+  }
+
+  .hero-orbit {
+    background: radial-gradient(circle, rgba(29, 185, 84, 0.22) 0%, rgba(29, 185, 84, 0.03) 42%, transparent 70%);
+    filter: blur(14px);
+  }
+
+  .hero-orbit-secondary {
+    background: radial-gradient(circle, rgba(255, 255, 255, 0.11) 0%, rgba(255, 255, 255, 0.02) 36%, transparent 72%);
+  }
+
+  .typing-caret {
+    width: 1px;
+    height: 0.95em;
+    background: rgba(255, 255, 255, 0.9);
+    box-shadow: 0 0 24px rgba(255, 255, 255, 0.35);
+    animation: blink 1.05s steps(1) infinite;
+  }
+
+  .premium-panel {
+    background:
+      linear-gradient(180deg, rgba(255, 255, 255, 0.055), rgba(255, 255, 255, 0.018)),
+      linear-gradient(180deg, rgba(6, 13, 10, 0.94), rgba(4, 8, 6, 0.98));
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    box-shadow:
+      inset 0 1px 0 rgba(255, 255, 255, 0.04),
+      0 28px 80px -36px rgba(0, 0, 0, 0.82);
+    backdrop-filter: blur(18px);
   }
 
   .glow-shadow {
     box-shadow: 0 0 40px rgba(46, 234, 115, 0.1);
+  }
+}
+
+@keyframes blink {
+  0%,
+  48% {
+    opacity: 1;
+  }
+
+  49%,
+  100% {
+    opacity: 0;
   }
 }
