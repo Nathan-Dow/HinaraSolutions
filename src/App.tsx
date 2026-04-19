@@ -3,7 +3,8 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-import React, { useRef } from "react";
+import React, { useRef, useState } from "react";
+import emailjs from "@emailjs/browser";
 import { motion } from "framer-motion";
 import { 
   Terminal, Layers, Cpu, ArrowRight, Bot, Globe, Database, Wrench, ChevronRight
@@ -12,7 +13,13 @@ import hinaraLogo from "../hinaralogo.png";
 
 // --- Sub-Components ---
 
-const Navbar = ({ scrollToSection, refs }: { scrollToSection: any, refs: any }) => {
+const Navbar = ({
+  scrollToSection,
+  refs,
+}: {
+  scrollToSection: (ref: React.RefObject<HTMLElement | null>) => void;
+  refs: Record<string, React.RefObject<HTMLElement | null>>;
+}) => {
   return (
     <nav className="fixed top-0 w-full z-50 bg-bg-base/80 backdrop-blur-xl border-b border-white/5">
       <div className="flex justify-between items-center px-8 py-2 max-w-7xl mx-auto w-full">
@@ -61,9 +68,29 @@ export default function App() {
     agency: useRef<HTMLElement>(null),
   };
 
-  const scrollToSection = (ref: React.RefObject<HTMLElement>) => {
+  const scrollToSection = (ref: React.RefObject<HTMLElement | null>) => {
     ref.current?.scrollIntoView({ behavior: "smooth", block: "start" });
   };
+
+  const [formData, setFormData] = useState({ name: "", email: "", message: "" });
+  const [formStatus, setFormStatus] = useState<"idle" | "loading" | "success" | "error">("idle");
+
+  async function handleSubmit(e: React.FormEvent) {
+    e.preventDefault();
+    setFormStatus("loading");
+    try {
+      await emailjs.send(
+        import.meta.env.VITE_EMAILJS_SERVICE_ID,
+        import.meta.env.VITE_EMAILJS_TEMPLATE_ID,
+        { name: formData.name, email: formData.email, message: formData.message },
+        { publicKey: import.meta.env.VITE_EMAILJS_PUBLIC_KEY }
+      );
+      setFormStatus("success");
+      setFormData({ name: "", email: "", message: "" });
+    } catch {
+      setFormStatus("error");
+    }
+  }
 
   return (
     <div className="bg-bg-base min-h-screen">
@@ -74,15 +101,6 @@ export default function App() {
         <section ref={sectionRefs.hero} className="relative pt-48 pb-32 px-6 overflow-hidden bg-mesh min-h-[90vh] flex flex-col justify-center">
           <div className="max-w-7xl mx-auto relative z-10 w-full">
             
-            <motion.div
-              initial={{ opacity: 0, y: 10 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6 }}
-              className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-bg-surface border border-brand-green/20 mb-8 backdrop-blur-md"
-            >
-              <span className="w-2 h-2 rounded-full bg-brand-green animate-pulse shadow-[0_0_8px_rgba(46,234,115,0.8)]"></span>
-              <span className="text-xs font-semibold text-brand-green uppercase tracking-widest">Engineering Next-Gen Systems</span>
-            </motion.div>
 
             <motion.h1 
               initial={{ opacity: 0, y: 20 }}
@@ -161,7 +179,8 @@ export default function App() {
                 initial={{ opacity: 0, scale: 0.98 }}
                 whileInView={{ opacity: 1, scale: 1 }}
                 whileHover={{ y: -5 }}
-                viewport={{ once: true, delay: 0.1 }}
+                viewport={{ once: true }}
+                transition={{ delay: 0.1 }}
                 className="bg-bg-surface p-8 rounded-3xl border border-white/5 hover:border-brand-green/30 flex flex-col justify-between transition-all duration-300"
               >
                 <Globe className="text-brand-green" size={32} />
@@ -175,7 +194,8 @@ export default function App() {
                 initial={{ opacity: 0, scale: 0.98 }}
                 whileInView={{ opacity: 1, scale: 1 }}
                 whileHover={{ y: -5 }}
-                viewport={{ once: true, delay: 0.2 }}
+                viewport={{ once: true }}
+                transition={{ delay: 0.2 }}
                 className="bg-bg-surface p-8 rounded-3xl border border-white/5 hover:border-brand-green/30 flex flex-col justify-between transition-all duration-300"
               >
                 <Bot className="text-brand-green" size={32} />
@@ -189,7 +209,8 @@ export default function App() {
                 initial={{ opacity: 0, scale: 0.98 }}
                 whileInView={{ opacity: 1, scale: 1 }}
                 whileHover={{ y: -5 }}
-                viewport={{ once: true, delay: 0.3 }}
+                viewport={{ once: true }}
+                transition={{ delay: 0.3 }}
                 className="md:col-span-2 bg-gradient-to-r from-bg-surface to-bg-elevated p-8 rounded-3xl border border-white/5 hover:border-border-subtle flex items-center justify-between overflow-hidden transition-all duration-300 group"
               >
                  <div className="z-10 relative">
@@ -305,28 +326,48 @@ export default function App() {
             >
               <h2 className="text-5xl md:text-7xl font-black text-white tracking-tighter mb-12">Ready to deploy?</h2>
               
-              <form className="space-y-6">
+              <form className="space-y-6" onSubmit={handleSubmit}>
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                  <input 
-                    className="w-full bg-bg-surface border border-white/10 focus:border-brand-green focus:ring-1 focus:ring-brand-green text-white py-4 px-5 rounded-xl outline-none transition-all placeholder:text-gray-600" 
-                    placeholder="Your Name" 
-                    type="text" 
+                  <input
+                    className="w-full bg-bg-surface border border-white/10 focus:border-brand-green focus:ring-1 focus:ring-brand-green text-white py-4 px-5 rounded-xl outline-none transition-all placeholder:text-gray-600"
+                    placeholder="Your Name"
+                    type="text"
+                    required
+                    value={formData.name}
+                    onChange={e => setFormData(d => ({ ...d, name: e.target.value }))}
                   />
-                  <input 
-                    className="w-full bg-bg-surface border border-white/10 focus:border-brand-green focus:ring-1 focus:ring-brand-green text-white py-4 px-5 rounded-xl outline-none transition-all placeholder:text-gray-600" 
-                    placeholder="Business Email" 
-                    type="email" 
+                  <input
+                    className="w-full bg-bg-surface border border-white/10 focus:border-brand-green focus:ring-1 focus:ring-brand-green text-white py-4 px-5 rounded-xl outline-none transition-all placeholder:text-gray-600"
+                    placeholder="Business Email"
+                    type="email"
+                    required
+                    value={formData.email}
+                    onChange={e => setFormData(d => ({ ...d, email: e.target.value }))}
                   />
                 </div>
-                
-                <textarea 
-                  className="w-full bg-bg-surface border border-white/10 focus:border-brand-green focus:ring-1 focus:ring-brand-green text-white py-4 px-5 rounded-xl outline-none transition-all placeholder:text-gray-600 min-h-[150px] resize-none" 
-                  placeholder="Tell us about the system you need built..." 
+
+                <textarea
+                  className="w-full bg-bg-surface border border-white/10 focus:border-brand-green focus:ring-1 focus:ring-brand-green text-white py-4 px-5 rounded-xl outline-none transition-all placeholder:text-gray-600 min-h-[150px] resize-none"
+                  placeholder="Tell us about the system you need built..."
+                  required
+                  value={formData.message}
+                  onChange={e => setFormData(d => ({ ...d, message: e.target.value }))}
                 ></textarea>
 
-                <button className="bg-brand-green text-bg-base py-4 px-8 rounded-xl font-bold text-lg hover:bg-white transition-all w-full sm:w-auto inline-flex items-center justify-center gap-2 glow-shadow">
-                  Send Request <Terminal size={18} />
+                <button
+                  type="submit"
+                  disabled={formStatus === "loading"}
+                  className="bg-brand-green text-bg-base py-4 px-8 rounded-xl font-bold text-lg hover:bg-white transition-all w-full sm:w-auto inline-flex items-center justify-center gap-2 glow-shadow disabled:opacity-60 disabled:cursor-not-allowed"
+                >
+                  {formStatus === "loading" ? "Sending..." : <><span>Send Request</span><Terminal size={18} /></>}
                 </button>
+
+                {formStatus === "success" && (
+                  <p className="text-brand-green font-medium">Request sent — we'll be in touch soon.</p>
+                )}
+                {formStatus === "error" && (
+                  <p className="text-red-400 font-medium">Something went wrong. Please try again.</p>
+                )}
               </form>
             </motion.div>
           </div>
