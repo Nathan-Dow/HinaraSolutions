@@ -21,6 +21,10 @@ import {
 import hinaraLogo from "../hinaralogo.png";
 
 const heroPhrases = ["Scale harder.", "Convert better.", "Operate smarter."];
+const longestHeroPhrase = heroPhrases.reduce(
+  (longest, phrase) => (phrase.length > longest.length ? phrase : longest),
+  heroPhrases[0]
+);
 
 const platformCards = [
   {
@@ -128,7 +132,7 @@ const Navbar = ({
 }) => {
   return (
     <nav className="fixed top-0 w-full z-50 bg-bg-base/80 backdrop-blur-xl border-b border-white/5">
-      <div className="flex justify-between items-center px-8 py-2 max-w-7xl mx-auto w-full">
+      <div className="flex justify-between items-center px-4 sm:px-6 md:px-8 py-2 sm:py-3 md:py-2 max-w-7xl mx-auto w-full gap-4">
         <div
           onClick={() => scrollToSection(refs.hero)}
           className="flex items-center gap-3 cursor-pointer group relative"
@@ -138,7 +142,7 @@ const Navbar = ({
           <img
             src={hinaraLogo}
             alt="Hinara Solutions logo"
-            className="relative z-10 h-24 md:h-28 w-auto drop-shadow-[0_0_10px_rgba(46,234,115,0.35)] group-hover:scale-105 transition-transform"
+            className="relative z-10 h-16 sm:h-20 md:h-28 w-auto drop-shadow-[0_0_10px_rgba(46,234,115,0.35)] group-hover:scale-105 transition-transform"
           />
         </div>
 
@@ -165,7 +169,7 @@ const Navbar = ({
 
         <button
           onClick={() => scrollToSection(refs.agency)}
-          className="bg-brand-green text-bg-base px-6 py-2.5 rounded-full text-sm font-bold hover:bg-white transition-all shadow-[0_0_20px_rgba(46,234,115,0.2)] hover:shadow-[0_0_30px_rgba(46,234,115,0.4)]"
+          className="shrink-0 bg-brand-green text-bg-base px-4 sm:px-6 py-2 sm:py-2.5 rounded-full text-xs sm:text-sm font-bold hover:bg-white transition-all shadow-[0_0_20px_rgba(46,234,115,0.2)] hover:shadow-[0_0_30px_rgba(46,234,115,0.4)]"
         >
           Start Building
         </button>
@@ -245,7 +249,7 @@ export default function App() {
       <main>
         <section
           ref={sectionRefs.hero}
-          className="relative pt-48 pb-32 px-6 overflow-hidden bg-mesh min-h-[90vh] flex flex-col justify-center"
+          className="relative pt-36 sm:pt-44 md:pt-48 pb-24 sm:pb-28 md:pb-32 px-4 sm:px-6 overflow-hidden bg-mesh min-h-[90vh] flex flex-col justify-center"
         >
           <div className="hero-noise absolute inset-0 opacity-40"></div>
           <div className="hero-orbit absolute left-[-8%] top-24 h-72 w-72 rounded-full"></div>
@@ -256,7 +260,7 @@ export default function App() {
               initial={{ opacity: 0, y: 16 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.5 }}
-              className="mb-8 inline-flex items-center gap-3 rounded-full border border-white/10 bg-white/[0.04] px-4 py-2 text-[11px] font-extrabold uppercase tracking-[0.28em] text-white/55 backdrop-blur-xl"
+              className="mb-6 sm:mb-8 inline-flex max-w-full items-center gap-3 rounded-full border border-white/10 bg-white/[0.04] px-4 py-2 text-[10px] sm:text-[11px] font-extrabold uppercase tracking-[0.22em] sm:tracking-[0.28em] text-white/55 backdrop-blur-xl"
             >
               <span className="h-2 w-2 rounded-full bg-brand-glow shadow-[0_0_18px_rgba(29,185,84,0.8)]"></span>
               Product-grade builds for serious operators
@@ -266,13 +270,18 @@ export default function App() {
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6, delay: 0.1 }}
-              className="font-display text-6xl md:text-8xl lg:text-9xl font-black tracking-[-0.06em] leading-[0.92] mb-8"
+              className="font-display text-[3.25rem] sm:text-6xl md:text-8xl lg:text-9xl font-black tracking-[-0.06em] leading-[0.92] mb-6 sm:mb-8"
             >
               <span className="text-gradient">Ship faster.</span>
               <br />
-              <span className="inline-flex min-h-[1.1em] items-center gap-3">
-                <span className="green-gradient">{typedHeadline}</span>
-                <span aria-hidden className="typing-caret"></span>
+              <span className="hero-typing-line">
+                <span aria-hidden className="hero-typing-reserve">
+                  {longestHeroPhrase}
+                </span>
+                <span className="hero-typing-active">
+                  <span className="green-gradient">{typedHeadline}</span>
+                  <span aria-hidden className="typing-caret"></span>
+                </span>
               </span>
             </motion.h1>
 
@@ -280,7 +289,7 @@ export default function App() {
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               transition={{ duration: 0.6, delay: 0.2 }}
-              className="text-lg md:text-xl text-text-muted max-w-3xl mb-12 font-medium leading-relaxed"
+              className="text-base sm:text-lg md:text-xl text-text-muted max-w-3xl mb-10 sm:mb-12 font-medium leading-relaxed"
             >
               Premium software systems and conversion-focused web experiences for Philippine
               businesses that need to look sharper, move faster, and stop leaking operational
@@ -293,23 +302,23 @@ export default function App() {
               transition={{ duration: 0.6, delay: 0.3 }}
               className="flex flex-col gap-8"
             >
-              <div className="flex flex-col sm:flex-row gap-5">
+              <div className="flex flex-col sm:flex-row gap-4 sm:gap-5">
                 <button
                   onClick={() => scrollToSection(sectionRefs.agency)}
-                  className="bg-brand-green text-bg-base px-8 py-4 rounded-full font-bold text-lg hover:bg-white transition-all flex items-center justify-center gap-2 shadow-[0_0_30px_rgba(46,234,115,0.2)] hover:shadow-[0_0_40px_rgba(255,255,255,0.3)] group"
+                  className="bg-brand-green text-bg-base px-6 sm:px-8 py-4 rounded-full font-bold text-base sm:text-lg hover:bg-white transition-all flex items-center justify-center gap-2 shadow-[0_0_30px_rgba(46,234,115,0.2)] hover:shadow-[0_0_40px_rgba(255,255,255,0.3)] group"
                 >
                   Deploy Your Vision
                   <ArrowRight size={20} className="group-hover:translate-x-1 transition-transform" />
                 </button>
                 <button
                   onClick={() => scrollToSection(sectionRefs.packages)}
-                  className="bg-white/[0.03] border border-white/10 text-white px-8 py-4 rounded-full font-bold text-lg hover:border-brand-green/50 hover:bg-white/[0.06] transition-all"
+                  className="bg-white/[0.03] border border-white/10 text-white px-6 sm:px-8 py-4 rounded-full font-bold text-base sm:text-lg hover:border-brand-green/50 hover:bg-white/[0.06] transition-all"
                 >
                   View Packages
                 </button>
               </div>
 
-              <div className="grid max-w-4xl grid-cols-1 gap-4 md:grid-cols-3">
+              <div className="grid max-w-4xl grid-cols-1 gap-3 sm:gap-4 md:grid-cols-3">
                 {heroNotes.map((item) => (
                   <div
                     key={item}
@@ -325,7 +334,7 @@ export default function App() {
 
         <section
           ref={sectionRefs.platform}
-          className="relative py-32 px-6 border-t border-white/5 scroll-mt-10 overflow-hidden"
+          className="relative py-24 sm:py-28 md:py-32 px-4 sm:px-6 border-t border-white/5 scroll-mt-10 overflow-hidden"
         >
           <div className="pointer-events-none absolute inset-x-0 top-0 h-64 bg-[radial-gradient(circle_at_top,rgba(255,255,255,0.06),transparent_58%)]"></div>
 
@@ -334,12 +343,12 @@ export default function App() {
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true, margin: "-100px" }}
-              className="mb-16 max-w-4xl"
+              className="mb-12 sm:mb-16 max-w-4xl"
             >
               <p className="mb-4 text-[11px] font-bold uppercase tracking-[0.28em] text-white/45">
                 Capabilities
               </p>
-              <h2 className="font-display text-4xl md:text-6xl font-black tracking-[-0.05em] text-white mb-5">
+              <h2 className="font-display text-3xl sm:text-4xl md:text-6xl font-black tracking-[-0.05em] text-white mb-5">
                 Premium systems.
                 <br />
                 <span className="text-white/50">No agency wallpaper.</span>
@@ -356,17 +365,17 @@ export default function App() {
                 whileInView={{ opacity: 1, scale: 1 }}
                 whileHover={{ y: -6 }}
                 viewport={{ once: true }}
-                className="premium-panel lg:col-span-7 p-8 md:p-10 rounded-[2rem] overflow-hidden relative group transition-all duration-300"
+                className="premium-panel lg:col-span-7 p-6 sm:p-8 md:p-10 rounded-[1.6rem] sm:rounded-[2rem] overflow-hidden relative group transition-all duration-300"
               >
                 <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_right,rgba(29,185,84,0.16),transparent_34%)] opacity-80"></div>
 
                 <div className="relative z-10 h-full flex flex-col justify-between gap-10">
-                  <div className="flex items-start justify-between gap-6">
+                  <div className="flex items-start justify-between gap-4 sm:gap-6">
                     <div>
                       <p className="mb-4 text-[11px] font-bold uppercase tracking-[0.28em] text-white/45">
                         Signature build
                       </p>
-                      <h3 className="font-display text-4xl md:text-5xl font-black tracking-[-0.05em] text-white mb-4">
+                      <h3 className="font-display text-3xl sm:text-4xl md:text-5xl font-black tracking-[-0.05em] text-white mb-4">
                         Custom Systems
                       </h3>
                       <p className="text-white/68 text-base md:text-lg max-w-2xl leading-relaxed">
@@ -391,7 +400,7 @@ export default function App() {
                       ))}
                     </div>
 
-                    <div className="grid gap-3 rounded-[1.6rem] border border-white/10 bg-black/35 p-4 md:grid-cols-[1.2fr_0.8fr]">
+                    <div className="grid gap-3 rounded-[1.35rem] sm:rounded-[1.6rem] border border-white/10 bg-black/35 p-4 md:grid-cols-[1.2fr_0.8fr]">
                       <div className="rounded-[1.2rem] border border-white/8 bg-[linear-gradient(180deg,rgba(255,255,255,0.07),rgba(255,255,255,0.02))] p-5">
                         <div className="mb-4 flex items-center justify-between text-[11px] font-bold uppercase tracking-[0.24em] text-white/35">
                           <span>Operations view</span>
@@ -445,14 +454,14 @@ export default function App() {
                       whileHover={{ y: -6 }}
                       viewport={{ once: true }}
                       transition={{ delay: 0.1 + index * 0.08 }}
-                      className="premium-panel relative flex h-full flex-col justify-between gap-10 rounded-[2rem] p-8 transition-all duration-300"
+                      className="premium-panel relative flex h-full flex-col justify-between gap-8 rounded-[1.6rem] sm:rounded-[2rem] p-6 sm:p-8 transition-all duration-300"
                     >
                       <div className="flex items-start justify-between gap-4">
                         <div>
                           <p className="mb-4 text-[11px] font-bold uppercase tracking-[0.26em] text-white/40">
                             {card.label}
                           </p>
-                          <h3 className="font-display text-2xl md:text-[2rem] font-black tracking-[-0.04em] text-white mb-3">
+                          <h3 className="font-display text-[1.75rem] md:text-[2rem] font-black tracking-[-0.04em] text-white mb-3">
                             {card.title}
                           </h3>
                         </div>
@@ -480,13 +489,13 @@ export default function App() {
                 whileHover={{ y: -6 }}
                 viewport={{ once: true }}
                 transition={{ delay: 0.3 }}
-                className="premium-panel lg:col-span-12 p-8 md:p-10 rounded-[2rem] flex flex-col gap-8 md:flex-row md:items-center md:justify-between overflow-hidden transition-all duration-300 group relative"
+                className="premium-panel lg:col-span-12 p-6 sm:p-8 md:p-10 rounded-[1.6rem] sm:rounded-[2rem] flex flex-col gap-6 sm:gap-8 md:flex-row md:items-center md:justify-between overflow-hidden transition-all duration-300 group relative"
               >
                 <div className="z-10 relative">
                   <p className="mb-4 text-[11px] font-bold uppercase tracking-[0.28em] text-white/40">
                     Ownership
                   </p>
-                  <h3 className="font-display text-3xl md:text-5xl font-black tracking-[-0.05em] text-white mb-3 group-hover:text-brand-green transition-colors">
+                  <h3 className="font-display text-3xl sm:text-4xl md:text-5xl font-black tracking-[-0.05em] text-white mb-3 group-hover:text-brand-green transition-colors">
                     Zero-Friction Handoffs
                   </h3>
                   <p className="max-w-2xl text-base md:text-lg text-white/62 leading-relaxed">
@@ -495,7 +504,7 @@ export default function App() {
                   </p>
                 </div>
 
-                <div className="relative z-10 grid gap-3 text-sm text-white/72 md:min-w-[24rem]">
+                <div className="relative z-10 grid gap-3 text-sm text-white/72 w-full md:w-auto md:min-w-[24rem]">
                   {ownershipPoints.map((item) => (
                     <div
                       key={item}

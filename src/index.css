@@ -69,6 +69,28 @@ html {
     background: radial-gradient(circle, rgba(255, 255, 255, 0.11) 0%, rgba(255, 255, 255, 0.02) 36%, transparent 72%);
   }
 
+  .hero-typing-line {
+    position: relative;
+    display: inline-grid;
+    min-height: 1.1em;
+    align-items: center;
+    max-width: 100%;
+  }
+
+  .hero-typing-reserve {
+    visibility: hidden;
+    white-space: nowrap;
+  }
+
+  .hero-typing-active {
+    position: absolute;
+    inset: 0;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.75rem;
+    white-space: nowrap;
+  }
+
   .typing-caret {
     width: 1px;
     height: 0.95em;
@@ -102,5 +124,11 @@ html {
   49%,
   100% {
     opacity: 0;
+  }
+}
+
+@media (max-width: 640px) {
+  .hero-typing-active {
+    gap: 0.45rem;
   }
 }
