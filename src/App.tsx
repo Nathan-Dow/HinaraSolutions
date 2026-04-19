@@ -7,7 +7,7 @@ import React, { useRef, useState } from "react";
 import emailjs from "@emailjs/browser";
 import { motion } from "framer-motion";
 import { 
-  Terminal, Layers, Cpu, ArrowRight, Bot, Globe, Database, Wrench, ChevronRight
+  Terminal, Layers, ArrowRight, Bot, Globe, Database, Wrench, ChevronRight, Check
 } from "lucide-react";
 import hinaraLogo from "../hinaralogo.png";
 
@@ -30,7 +30,7 @@ const Navbar = ({
           className="flex items-center gap-3 cursor-pointer group relative"
         >
           {/* Logo Background Glow */}
-          <div className="absolute -left-2 w-10 h-10 bg-brand-green/20 rounded-lg blur-md group-hover:bg-brand-green/40 transition-all duration-500"></div>
+          <div className="absolute left-16 w-10 h-10 bg-brand-green/20 rounded-lg blur-md group-hover:bg-brand-green/40 transition-all duration-500"></div>
           
           <img
             src={hinaraLogo}
@@ -224,94 +224,202 @@ export default function App() {
           </div>
         </section>
 
-        {/* PACKAGES SECTION */}
-        <section ref={sectionRefs.packages} className="py-32 px-6 bg-bg-surface border-t border-white/5 relative scroll-mt-10">
-          <div className="absolute top-0 inset-x-0 h-px bg-gradient-to-r from-transparent via-brand-green/20 to-transparent"></div>
-          
-          <div className="max-w-7xl mx-auto relative z-10">
-            <motion.div 
-              initial={{ opacity: 0, y: 20 }}
+        {/* PACKAGES SECTION — Spotify-inspired premium tiers */}
+        <section ref={sectionRefs.packages} className="relative scroll-mt-10 overflow-hidden border-t border-white/[0.06] py-28 px-6">
+          <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_80%_50%_at_50%_-20%,rgba(29,185,84,0.18),transparent)]" />
+          <div className="pointer-events-none absolute inset-0 bg-gradient-to-b from-bg-base via-[#050805] to-bg-surface" />
+
+          <div className="relative z-10 mx-auto max-w-6xl">
+            <motion.div
+              initial={{ opacity: 0, y: 16 }}
               whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              className="flex flex-col justify-between items-start mb-20 gap-4"
+              viewport={{ once: true, margin: "-80px" }}
+              transition={{ duration: 0.45 }}
+              className="mb-14 text-center md:mb-16"
             >
-              <h2 className="text-4xl md:text-6xl font-black text-white tracking-tighter">Select your architecture.</h2>
-              <p className="text-text-muted text-lg max-w-xl">Transparent pricing. No bloated agency fees. Just high-performance engineering tailored to your operational scale.</p>
+              <p className="mb-4 text-[11px] font-bold uppercase tracking-[0.22em] text-white/45">
+                Packages
+              </p>
+              <h2 className="mb-5 text-4xl font-black tracking-tight text-white md:text-6xl">
+                Every tier. <span className="text-white/50">One serious standard.</span>
+              </h2>
+              <p className="mx-auto max-w-xl text-base leading-relaxed text-text-muted md:text-lg">
+                Engineered deliverables you can ship with — crisp scope, clean handoffs, and room to grow when you are ready.
+              </p>
             </motion.div>
 
-            <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 mb-24">
+            <div className="mx-auto grid max-w-5xl grid-cols-1 gap-5 lg:grid-cols-3 lg:gap-4 lg:items-stretch">
               {[
                 {
-                  icon: <Bot size={24} />, name: "AI Customer System", target: "Service Businesses & Retail", desc: "Automated chat replies, FAQ handling, and lead capture directly to your database.", price: "₱15k–30k", highlight: false
+                  icon: Bot,
+                  name: "AI Customer System",
+                  audience: "Service & retail",
+                  tagline: "Replies and leads on autopilot.",
+                  features: [
+                    "Smart chat and FAQ routing",
+                    "Lead capture to your database",
+                    "Workflow hooks you actually own",
+                  ],
+                  highlight: false,
                 },
                 {
-                  icon: <Globe size={24} />, name: "Growth Website", target: "Emerging SMEs", desc: "Modern, fast 3-5 page architecture. Forms, SEO setup, and mobile perfection.", price: "₱10k–30k", highlight: true
+                  icon: Globe,
+                  name: "Growth Website",
+                  audience: "Emerging SMEs",
+                  tagline: "Fast pages that convert.",
+                  features: [
+                    "3–5 page architecture",
+                    "SEO and forms baked in",
+                    "Mobile-first polish",
+                  ],
+                  highlight: true,
                 },
                 {
-                  icon: <Database size={24} />, name: "Ops & Booking OS", target: "Agencies & Logistics", desc: "Full-stack internal dashboard, admin panel, and reservation automation.", price: "₱40k–120k", highlight: false
-                }
-              ].map((pkg, idx) => (
-                <motion.div 
-                  key={idx}
-                  initial={{ opacity: 0, y: 30 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  viewport={{ once: true }}
-                  transition={{ delay: idx * 0.1 }}
-                  className={`p-8 rounded-3xl transition-all duration-300 flex flex-col group ${
-                    pkg.highlight 
-                      ? 'bg-bg-elevated border border-brand-green/50 shadow-[0_0_40px_rgba(46,234,115,0.1)] lg:scale-105 z-10 relative' 
-                      : 'bg-bg-base border border-white/5 hover:border-brand-green/30 hover:-translate-y-2'
-                  }`}
-                >
-                  <div className="flex justify-between items-start mb-12">
-                    <div className={`p-3 rounded-xl ${pkg.highlight ? 'bg-brand-green text-bg-base' : 'bg-bg-elevated text-brand-green'}`}>
-                      {pkg.icon}
+                  icon: Database,
+                  name: "Ops & Booking OS",
+                  audience: "Agencies & logistics",
+                  tagline: "One pane for operations.",
+                  features: [
+                    "Internal dashboard & admin",
+                    "Booking and reservations",
+                    "Notifications that stick",
+                  ],
+                  highlight: false,
+                },
+              ].map((pkg, idx) => {
+                const Icon = pkg.icon;
+                return (
+                  <motion.article
+                    key={pkg.name}
+                    initial={{ opacity: 0, y: 24 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    viewport={{ once: true, margin: "-40px" }}
+                    transition={{ duration: 0.4, delay: idx * 0.08 }}
+                    className={`relative flex flex-col rounded-2xl border p-7 md:p-8 ${
+                      pkg.highlight
+                        ? "border-brand-glow/35 bg-gradient-to-b from-white/[0.07] to-white/[0.02] shadow-[0_0_0_1px_rgba(29,185,84,0.12),0_24px_60px_-20px_rgba(0,0,0,0.65)] lg:scale-[1.02] lg:z-[1]"
+                        : "border-white/[0.08] bg-black/40 backdrop-blur-md hover:border-white/[0.14]"
+                    }`}
+                  >
+                    {pkg.highlight && (
+                      <span className="absolute -top-3 left-1/2 -translate-x-1/2 whitespace-nowrap rounded-full bg-brand-glow px-3 py-1 text-[10px] font-bold uppercase tracking-wider text-black shadow-[0_8px_24px_rgba(29,185,84,0.35)]">
+                        Top pick
+                      </span>
+                    )}
+
+                    <div className="mb-6 flex items-start justify-between gap-3">
+                      <div
+                        className={`flex h-12 w-12 items-center justify-center rounded-full ${
+                          pkg.highlight
+                            ? "bg-brand-glow text-black shadow-[0_0_24px_rgba(29,185,84,0.35)]"
+                            : "bg-white/[0.06] text-brand-green"
+                        }`}
+                      >
+                        <Icon size={22} strokeWidth={2} />
+                      </div>
                     </div>
-                    {pkg.highlight && <span className="bg-brand-green/20 text-brand-green text-xs font-bold px-3 py-1 rounded-full border border-brand-green/30">Most Popular</span>}
-                  </div>
-                  
-                  <h3 className="text-2xl font-bold text-white mb-2">{pkg.name}</h3>
-                  <p className="text-sm text-text-muted mb-8 h-10">{pkg.target}</p>
-                  
-                  <div className="text-3xl font-bold text-white mb-8 tracking-tight">{pkg.price}</div>
-                  <p className="text-sm text-text-muted mb-10 leading-relaxed flex-grow">{pkg.desc}</p>
-                  
-                  <button className={`w-full py-4 rounded-xl font-bold transition-all flex items-center justify-center gap-2 ${
-                    pkg.highlight ? 'bg-brand-green text-bg-base hover:bg-white' : 'bg-bg-elevated text-white hover:bg-brand-green hover:text-bg-base'
-                  }`}>
-                    Initialize <ChevronRight size={16} />
-                  </button>
-                </motion.div>
-              ))}
+
+                    <h3 className="text-xl font-bold tracking-tight text-white md:text-[1.35rem]">
+                      {pkg.name}
+                    </h3>
+                    <p className="mt-1 text-xs font-semibold uppercase tracking-wider text-white/40">
+                      {pkg.audience}
+                    </p>
+                    <p className="mt-4 flex-grow text-sm leading-relaxed text-white/65">
+                      {pkg.tagline}
+                    </p>
+
+                    <ul className="mb-8 mt-6 space-y-3">
+                      {pkg.features.map((line) => (
+                        <li key={line} className="flex gap-3 text-sm text-white/80">
+                          <Check
+                            className="mt-0.5 h-[18px] w-[18px] shrink-0 text-brand-glow"
+                            strokeWidth={2.5}
+                            aria-hidden
+                          />
+                          <span className="leading-snug">{line}</span>
+                        </li>
+                      ))}
+                    </ul>
+
+                    <button
+                      type="button"
+                      onClick={() => scrollToSection(sectionRefs.agency)}
+                      className={`mt-auto inline-flex w-full items-center justify-center gap-1 rounded-full py-3.5 text-sm font-bold transition-all ${
+                        pkg.highlight
+                          ? "bg-brand-glow text-black hover:brightness-110 hover:shadow-[0_12px_40px_rgba(29,185,84,0.35)]"
+                          : "bg-transparent text-white ring-1 ring-white/15 hover:bg-white/[0.06] hover:ring-white/25"
+                      }`}
+                    >
+                      Get started
+                      <ChevronRight size={18} className="opacity-90" />
+                    </button>
+                  </motion.article>
+                );
+              })}
             </div>
 
-            {/* Retainers */}
-            <motion.div 
+            {/* Retainers — premium list, no pricing */}
+            <motion.div
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
-              className="max-w-4xl mx-auto border border-border-subtle rounded-3xl p-8 md:p-12 bg-bg-elevated/50 backdrop-blur-sm"
+              transition={{ duration: 0.45 }}
+              className="mx-auto mt-16 max-w-3xl rounded-2xl border border-white/[0.08] bg-black/35 p-8 backdrop-blur-md md:p-10"
             >
-              <h3 className="text-2xl font-bold text-white mb-8 flex items-center gap-3">
-                <Wrench className="text-brand-green" /> Maintenance & Support Retainers
-              </h3>
-              <div className="space-y-6">
-                <div className="grid grid-cols-1 md:grid-cols-12 gap-4 pb-6 border-b border-white/10 items-center hover:px-2 transition-all">
-                  <div className="md:col-span-3 font-semibold text-white">Basic Care</div>
-                  <div className="md:col-span-6 text-sm text-text-muted">Hosting, bug fixes, uptime monitoring for static/small sites.</div>
-                  <div className="md:col-span-3 text-right font-mono text-white">₱2k–3.5k/mo</div>
-                </div>
-                <div className="grid grid-cols-1 md:grid-cols-12 gap-4 pb-6 border-b border-white/10 items-center hover:px-2 transition-all">
-                  <div className="md:col-span-3 font-semibold text-brand-green">Growth Support</div>
-                  <div className="md:col-span-6 text-sm text-text-muted">Active updates, minor logic changes, routine database backups.</div>
-                  <div className="md:col-span-3 text-right font-mono text-brand-green font-bold">₱5k–8k/mo</div>
-                </div>
-                <div className="grid grid-cols-1 md:grid-cols-12 gap-4 items-center hover:px-2 transition-all">
-                  <div className="md:col-span-3 font-semibold text-white">Automation</div>
-                  <div className="md:col-span-6 text-sm text-text-muted">AI/chatbot tweaking, workflow improvements, API maintenance.</div>
-                  <div className="md:col-span-3 text-right font-mono text-white">₱2k–3.5k/mo</div>
-                </div>
+              <div className="mb-8 flex flex-col gap-2 md:flex-row md:items-end md:justify-between">
+                <h3 className="flex items-center gap-3 text-xl font-bold text-white md:text-2xl">
+                  <span className="flex h-10 w-10 items-center justify-center rounded-full bg-white/[0.06] text-brand-green">
+                    <Wrench size={20} />
+                  </span>
+                  Care & retainers
+                </h3>
+                <p className="text-sm text-white/45">
+                  Ongoing partnership — scoped to how you run day to day.
+                </p>
               </div>
+              <div className="divide-y divide-white/[0.06]">
+                {[
+                  {
+                    title: "Basic Care",
+                    desc: "Hosting, bug fixes, and uptime monitoring for static or light sites.",
+                  },
+                  {
+                    title: "Growth Support",
+                    desc: "Active updates, minor logic changes, and routine database care.",
+                    spotlight: true,
+                  },
+                  {
+                    title: "Automation",
+                    desc: "AI and chatbot tuning, workflow tweaks, and API maintenance.",
+                  },
+                ].map((row) => (
+                  <div
+                    key={row.title}
+                    className={`flex flex-col gap-2 py-5 first:pt-0 last:pb-0 md:flex-row md:items-center md:justify-between md:gap-8 ${
+                      row.spotlight ? "text-white" : ""
+                    }`}
+                  >
+                    <div
+                      className={`text-sm font-semibold ${
+                        row.spotlight ? "text-brand-glow" : "text-white/90"
+                      }`}
+                    >
+                      {row.title}
+                    </div>
+                    <p className="max-w-xl text-sm leading-relaxed text-white/55 md:text-right">
+                      {row.desc}
+                    </p>
+                  </div>
+                ))}
+              </div>
+              <button
+                type="button"
+                onClick={() => scrollToSection(sectionRefs.agency)}
+                className="mt-8 w-full rounded-full border border-white/10 bg-white/[0.04] py-3.5 text-sm font-semibold text-white transition hover:bg-white/[0.08]"
+              >
+                Talk through a retainer
+              </button>
             </motion.div>
           </div>
         </section>
