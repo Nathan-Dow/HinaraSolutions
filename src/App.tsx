@@ -18,7 +18,7 @@ import {
   Check,
   Sparkles,
 } from "lucide-react";
-import hinaraLogo from "../hinaralogo.png";
+import hinaraLogo from "/hinaralogo.png";
 
 const heroPhrases = ["Scale harder.", "Convert better.", "Operate smarter."];
 const longestHeroPhrase = heroPhrases.reduce(
