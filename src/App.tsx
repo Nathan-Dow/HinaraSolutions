@@ -20,7 +20,7 @@ import {
 } from "lucide-react";
 import hinaraLogo from "/hinaralogo.png";
 
-const heroPhrases = ["Deploy rapidly.", "Automate instantly.", "Operate smarter.", "Outpace competitors.", "Modernize now."];
+const heroPhrases = ["Deploy rapidly.", "Automate.", "Operate smarter.", "Outpace.", "Modernize."];
 const longestHeroPhrase = heroPhrases.reduce(
   (longest, phrase) => (phrase.length > longest.length ? phrase : longest),
   heroPhrases[0]
